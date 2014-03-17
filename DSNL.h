@@ -33,9 +33,9 @@ class DSNL : public QObject {
     const static QUrl UrlConfig;
     const static QUrl UrlData;
 
-    DSNLConfig config;
+    DSNLConfig* config;
 
-    DSNLData data;
+    DSNLData* data;
 
     DSNL(QNetworkAccessManager*);
     ~DSNL();

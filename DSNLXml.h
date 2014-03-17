@@ -15,22 +15,45 @@
  * You should have received a copy of the LGPL and GPL along with this
  * program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _DSNL_DSNLConfig_H
-#define _DSNL_DSNLConfig_H
+#ifndef _DSNL_DSNLXml_H
+#define _DSNL_DSNLXml_H
 
-#include "DSNLXml.h"
+#include <QDomDocument>
+#include <QObject>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QUrl>
 
 /*!
  * 
  */
-class DSNLConfig : public DSNLXml {
+class DSNLXml : public QObject {
     Q_OBJECT;
 
+ protected:
+
+    QNetworkAccessManager* nam;
+
+    const QUrl& src;
+
+    QNetworkReply *response;
+
+    QDomDocument *dom;
+
  public:
-    DSNLConfig(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
-    ~DSNLConfig();
+    DSNLXml(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
+    ~DSNLXml();
 
-    virtual void readDom();
+    virtual void readDom() = 0;
 
+ public slots:
+    void update();
+    void read();
+    void error(QNetworkReply::NetworkError);
+
+ signals:
+    void completed();
+    void failed();
 };
 #endif

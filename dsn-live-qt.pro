@@ -18,6 +18,7 @@ HEADERS += DSNL.h \
            DSNLDataStationDish.h \
            DSNLDataStationSignal.h \
            DSNLDataStationTarget.h \
+           DSNLXml.h \
            Main.h
 
 SOURCES += DSNL.cpp \
@@ -30,4 +31,5 @@ SOURCES += DSNL.cpp \
            DSNLDataStationDish.cpp \
            DSNLDataStationSignal.cpp \
            DSNLDataStationTarget.cpp \
+           DSNLXml.cpp \
            Main.cpp

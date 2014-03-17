@@ -22,15 +22,30 @@ const QUrl DSNL::UrlConfig("http://eyes.nasa.gov/dsn/config.xml");
 const QUrl DSNL::UrlData("http://eyes.nasa.gov/dsn/data/dsn.xml");
 
 DSNL::DSNL(QNetworkAccessManager* nam)
-    : config(nam,UrlConfig), data(nam,UrlData)
+    : config(new DSNLConfig(nam,UrlConfig)), data(new DSNLData(nam,UrlData))
 {
+    QObject::connect(config,SIGNAL(completed()),this,SLOT(completedConfig()));
+    QObject::connect(config,SIGNAL(failed()),this,SLOT(failedConfig()));
+    QObject::connect(data,SIGNAL(completed()),this,SLOT(completedData()));
+    QObject::connect(data,SIGNAL(failed()),this,SLOT(failedData()));
 }
 DSNL::~DSNL()
 {
+    if (0 != config){
+        config->deleteLater();
+        config = 0;
+    }
+    if (0 != data){
+        data->deleteLater();
+        data = 0;
+    }
 }
 void DSNL::init()
 {
+    config->update();
+    data->update();
 }
 void DSNL::update()
 {
+    data->update();
 }

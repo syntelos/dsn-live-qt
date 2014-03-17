@@ -18,19 +18,19 @@
 #ifndef _DSNL_DSNLData_H
 #define _DSNL_DSNLData_H
 
-#include <QObject>
-#include <QNetworkAccessManager>
-#include <QUrl>
+#include "DSNLXml.h"
 
 /*!
  * 
  */
-class DSNLData : public QObject {
+class DSNLData : public DSNLXml {
     Q_OBJECT;
 
  public:
-    DSNLData(QNetworkAccessManager*,const QUrl&);
+    DSNLData(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
     ~DSNLData();
+
+    virtual void readDom();
 
 };
 #endif

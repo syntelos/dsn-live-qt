@@ -18,9 +18,12 @@
 
 #include "DSNLConfig.h"
 
-DSNLConfig::DSNLConfig(QNetworkAccessManager* nam, const QUrl& src)
+DSNLConfig::DSNLConfig(QNetworkAccessManager* nam, const QUrl& src, QObject* p)
+    : DSNLXml(nam,src,p)
 {
 }
 DSNLConfig::~DSNLConfig()
 {
+}
+void DSNLConfig::readDom(){
 }
