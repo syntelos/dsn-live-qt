@@ -18,9 +18,35 @@
 
 #include "DSNLDataStation.h"
 
-DSNLDataStation::DSNLDataStation()
+DSNLDataStation::DSNLDataStation(QString system, QString display, QString utc, QString tzo)
+    : system(system), display(display), 
+      timeUTC(QDateTime::fromString(utc)), timeZoneOffset(QDateTime::fromString(tzo)),
+      dishes()
 {
 }
 DSNLDataStation::~DSNLDataStation()
 {
+    QList<DSNLDataStationDish*>::iterator it = dishes.begin();
+    QList<DSNLDataStationDish*>::iterator end = dishes.end();
+    while (it != end){
+        DSNLDataStationDish* dish = *it;
+
+        delete dish;
+
+        it = dishes.erase(it);
+    }
+}
+void DSNLDataStation::print(QTextStream& out){
+
+    out << "data station " << system << " '" << display << "'" << endl;
+
+    QList<DSNLDataStationDish*>::iterator it = dishes.begin();
+    QList<DSNLDataStationDish*>::iterator end = dishes.end();
+    while (it != end){
+        DSNLDataStationDish* dish = *it;
+
+        dish->print(out);
+
+        it++;
+    }
 }

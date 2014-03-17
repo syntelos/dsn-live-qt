@@ -21,7 +21,7 @@
 #include "DSNLConfig.h"
 #include "DSNLData.h"
 
-#include <QTimer>
+#include <QTextStream>
 
 /*!
  * 
@@ -39,6 +39,8 @@ class DSNL : public QObject {
 
     DSNL(QNetworkAccessManager*);
     ~DSNL();
+
+    void print(QTextStream&);
 
  public slots:
     /*

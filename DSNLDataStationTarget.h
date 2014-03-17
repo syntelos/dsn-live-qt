@@ -18,14 +18,24 @@
 #ifndef _DSNL_DSNLDataStationTarget_H
 #define _DSNL_DSNLDataStationTarget_H
 
+#include <QString>
+#include <QTextStream>
+
 /*!
  * 
  */
 class DSNLDataStationTarget {
 
  public:
-    DSNLDataStationTarget();
+    const QString system;
+    const double uplegRange;
+    const double downlegRange;
+    const double rtlt;
+
+    DSNLDataStationTarget(QString,QString,QString,QString);
     ~DSNLDataStationTarget();
+
+    void print(QTextStream&);
 
 };
 #endif

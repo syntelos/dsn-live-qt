@@ -18,9 +18,17 @@
 
 #include "DSNLConfigDish.h"
 
-DSNLConfigDish::DSNLConfigDish()
+DSNLConfigDish::DSNLConfigDish(QString site, QString system, QString display, QString type)
+    : site(site), system(system), display(display), type(type)
+{
+}
+DSNLConfigDish::DSNLConfigDish(const DSNLConfigDish& copy)
+    : site(copy.site), system(copy.system), display(copy.display), type(copy.type)
 {
 }
 DSNLConfigDish::~DSNLConfigDish()
 {
+}
+void DSNLConfigDish::print(QTextStream& out){
+    out << "dish: " << system << ", '" << display << "'" << endl;
 }

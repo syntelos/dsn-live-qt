@@ -18,9 +18,38 @@
 
 #include "DSNLConfigSite.h"
 
-DSNLConfigSite::DSNLConfigSite()
+DSNLConfigSite::DSNLConfigSite(QString system, QString display, QString flag)
+    : system(system), display(display), flag(flag), dishes()
+{
+}
+DSNLConfigSite::DSNLConfigSite(const DSNLConfigSite& copy)
+    : system(copy.system), display(copy.display), flag(copy.flag), dishes(copy.dishes)
 {
 }
 DSNLConfigSite::~DSNLConfigSite()
 {
+    clear();
+}
+void DSNLConfigSite::clear(){
+    QMap<QString,DSNLConfigDish*>::iterator it = dishes.begin();
+    QMap<QString,DSNLConfigDish*>::iterator end = dishes.end();
+    while (it != end){
+        DSNLConfigDish* dish = it.value();
+        it = this->dishes.erase(it);
+        delete dish;
+    }
+}
+void DSNLConfigSite::print(QTextStream& out)
+{
+    out << "site: " << system << ", '" << display << "'" << endl;
+    {
+        QMap<QString,DSNLConfigDish*>::iterator it = dishes.begin();
+        QMap<QString,DSNLConfigDish*>::iterator end = dishes.end();
+        while (it != end){
+            DSNLConfigDish* dish = it.value();
+
+            dish->print(out);
+            it++;
+        }
+    }
 }

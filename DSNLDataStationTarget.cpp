@@ -18,9 +18,15 @@
 
 #include "DSNLDataStationTarget.h"
 
-DSNLDataStationTarget::DSNLDataStationTarget()
+DSNLDataStationTarget::DSNLDataStationTarget(QString system, QString uplegRange, QString downlegRange, QString rtlt)
+    : system(system), 
+      uplegRange(uplegRange.toDouble()), downlegRange(downlegRange.toDouble()), 
+      rtlt(rtlt.toDouble())
 {
 }
 DSNLDataStationTarget::~DSNLDataStationTarget()
 {
+}
+void DSNLDataStationTarget::print(QTextStream& out){
+    out << "target " << system << ", upleg " << uplegRange << ", downleg " << downlegRange << ", rtlt " << rtlt << endl;
 }

@@ -18,14 +18,33 @@
 #ifndef _DSNL_DSNLDataStationDish_H
 #define _DSNL_DSNLDataStationDish_H
 
+#include <QDateTime>
+#include <QList>
+#include <QString>
+#include <QTextStream>
+
+#include "DSNLDataStationSignal.h"
+#include "DSNLDataStationTarget.h"
+
 /*!
  * 
  */
 class DSNLDataStationDish {
 
  public:
-    DSNLDataStationDish();
+    const QString system;
+    const double azimuth;
+    const double elevation;
+    const QDateTime created;
+    const QDateTime updated;
+
+    QList<DSNLDataStationSignal*> signal;
+    QList<DSNLDataStationTarget*> target;
+
+    DSNLDataStationDish(QString,QString,QString,QString,QString);
     ~DSNLDataStationDish();
+
+    void print(QTextStream&);
 
 };
 #endif

@@ -18,9 +18,58 @@
 
 #include "DSNLDataStationDish.h"
 
-DSNLDataStationDish::DSNLDataStationDish()
+DSNLDataStationDish::DSNLDataStationDish(QString system, QString az, QString el, QString cr, QString up)
+    : system(system), azimuth(az.toDouble()), elevation(el.toDouble()), 
+      created(QDateTime::fromString(cr)), updated(QDateTime::fromString(up)),
+      signal(), target()
 {
 }
 DSNLDataStationDish::~DSNLDataStationDish()
 {
+    {
+        QList<DSNLDataStationSignal*>::iterator it = signal.begin();
+        QList<DSNLDataStationSignal*>::iterator end = signal.end();
+
+        while (it != end){
+            DSNLDataStationSignal* sig = *it;
+            delete sig;
+
+            it = signal.erase(it);
+        }
+    }
+    {
+        QList<DSNLDataStationTarget*>::iterator it = target.begin();
+        QList<DSNLDataStationTarget*>::iterator end = target.end();
+
+        while (it != end){
+            DSNLDataStationTarget* tgt = *it;
+            delete tgt;
+
+            it = target.erase(it);
+        }
+    }
+}
+void DSNLDataStationDish::print(QTextStream& out){
+
+    out << "dish " << system << ", az " << azimuth << ", el " << elevation << endl;
+    {
+        QList<DSNLDataStationSignal*>::iterator it = signal.begin();
+        QList<DSNLDataStationSignal*>::iterator end = signal.end();
+
+        while (it != end){
+            DSNLDataStationSignal* sig = *it;
+
+            sig->print(out);
+        }
+    }
+    {
+        QList<DSNLDataStationTarget*>::iterator it = target.begin();
+        QList<DSNLDataStationTarget*>::iterator end = target.end();
+
+        while (it != end){
+            DSNLDataStationTarget* tgt = *it;
+
+            tgt->print(out);
+        }
+    }
 }

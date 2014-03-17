@@ -15,6 +15,9 @@
  * You should have received a copy of the LGPL and GPL along with this
  * program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <iostream>
+#include <QTextStream>
+#include <QTimer>
 
 #include "Main.h"
 
@@ -22,8 +25,6 @@
 Main::Main(int argc, char** argv)
     : QApplication(argc,argv), nam(new QNetworkAccessManager(this)), dsnl(new DSNL(nam))
 {
-    QObject::connect(dsnl,SIGNAL(failedConfig()),this,SLOT(quit()));
-    QObject::connect(dsnl,SIGNAL(failedData()),this,SLOT(quit()));
 }
 Main::~Main(){
 
@@ -39,11 +40,16 @@ Main::~Main(){
 
 
 int main(int argc, char** argv){
-    /*
-     */
+
     Main main(argc,argv);
 
     main.dsnl->init();
+
+    QTimer *timer = new QTimer();
+
+    timer->setInterval(1000);
+
+    QObject::connect(timer,SIGNAL(timeout()),main.dsnl,SLOT(update()));
 
     return main.exec();
 }

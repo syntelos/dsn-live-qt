@@ -18,14 +18,32 @@
 #ifndef _DSNL_DSNLConfigSite_H
 #define _DSNL_DSNLConfigSite_H
 
+#include <QString>
+#include <QMap>
+#include <QTextStream>
+
+#include "DSNLConfigDish.h"
+
 /*!
  * 
  */
 class DSNLConfigSite {
 
  public:
-    DSNLConfigSite();
+
+    const QString system;
+    const QString display;
+    const QString flag;
+
+    QMap<QString,DSNLConfigDish*> dishes;
+
+    DSNLConfigSite(QString,QString,QString);
+    DSNLConfigSite(const DSNLConfigSite&);
     ~DSNLConfigSite();
+
+    void clear();
+
+    void print(QTextStream&);
 
 };
 #endif

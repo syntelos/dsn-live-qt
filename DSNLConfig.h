@@ -19,6 +19,12 @@
 #define _DSNL_DSNLConfig_H
 
 #include "DSNLXml.h"
+#include <QMap>
+#include <QTextStream>
+
+#include "DSNLConfigSite.h"
+#include "DSNLConfigDish.h"
+#include "DSNLConfigSpacecraft.h"
 
 /*!
  * 
@@ -27,8 +33,19 @@ class DSNLConfig : public DSNLXml {
     Q_OBJECT;
 
  public:
+
+    QMap<QString,DSNLConfigSite*> sites;
+
+    QMap<QString,DSNLConfigDish*> dishes;
+
+    QMap<QString,DSNLConfigSpacecraft*> spacecraft;
+
     DSNLConfig(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
     ~DSNLConfig();
+
+    void clear();
+
+    void print(QTextStream&);
 
     virtual void readDom();
 

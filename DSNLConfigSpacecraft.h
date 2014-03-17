@@ -18,14 +18,25 @@
 #ifndef _DSNL_DSNLConfigSpacecraft_H
 #define _DSNL_DSNLConfigSpacecraft_H
 
+#include <QString>
+#include <QTextStream>
+
 /*!
  * 
  */
 class DSNLConfigSpacecraft {
 
  public:
+
+    const QString system;
+    const QString display;
+
     DSNLConfigSpacecraft();
+    DSNLConfigSpacecraft(QString,QString);
+    DSNLConfigSpacecraft(const DSNLConfigSpacecraft&);
     ~DSNLConfigSpacecraft();
+
+    void print(QTextStream&);
 
 };
 #endif

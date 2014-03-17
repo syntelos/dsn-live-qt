@@ -18,14 +18,29 @@
 #ifndef _DSNL_DSNLDataStation_H
 #define _DSNL_DSNLDataStation_H
 
+#include <QDateTime>
+#include <QList>
+#include <QString>
+#include <QTextStream>
+#include "DSNLDataStationDish.h"
+
 /*!
  * 
  */
 class DSNLDataStation {
 
  public:
-    DSNLDataStation();
+    const QString system;
+    const QString display;
+    const QDateTime timeUTC;
+    const QDateTime timeZoneOffset;
+
+    QList<DSNLDataStationDish*> dishes;
+
+    DSNLDataStation(QString,QString,QString,QString);
     ~DSNLDataStation();
+
+    void print(QTextStream&);
 
 };
 #endif

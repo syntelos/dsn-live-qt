@@ -18,14 +18,46 @@
 #ifndef _DSNL_DSNLDataStationSignal_H
 #define _DSNL_DSNLDataStationSignal_H
 
+#include <QString>
+#include <QTextStream>
+
 /*!
  * 
  */
 class DSNLDataStationSignal {
 
  public:
-    DSNLDataStationSignal();
+    enum Direction {
+        DirectionUp,
+        DirectionDown
+    };
+    enum Type {
+        TypeUnrecognized,
+        TypeNone,
+        TypeCarrier,
+        TypeData
+    };
+    static Type TypeOf(QString);
+
+    static double PowerOf(Direction,QString);
+
+    const Direction direction;
+
+    const Type type;
+
+    const double dataRate; // bps
+
+    const double frequency; // Hz
+
+    const double power; // kW
+
+    const QString spacecraft; // system name
+
+
+    DSNLDataStationSignal(Direction,QString,QString,QString,QString,QString);
     ~DSNLDataStationSignal();
+
+    void print(QTextStream&);
 
 };
 #endif

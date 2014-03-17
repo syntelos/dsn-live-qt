@@ -18,9 +18,17 @@
 
 #include "DSNLConfigSpacecraft.h"
 
-DSNLConfigSpacecraft::DSNLConfigSpacecraft()
+DSNLConfigSpacecraft::DSNLConfigSpacecraft(QString system, QString display)
+    : system(system), display(display)
+{
+}
+DSNLConfigSpacecraft::DSNLConfigSpacecraft(const DSNLConfigSpacecraft& copy)
+    : system(copy.system), display(copy.display)
 {
 }
 DSNLConfigSpacecraft::~DSNLConfigSpacecraft()
 {
+}
+void DSNLConfigSpacecraft::print(QTextStream& out){
+    out << "spacecraft: " << system << ", '" << display << "'" << endl;
 }

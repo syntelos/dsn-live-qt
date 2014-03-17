@@ -31,9 +31,9 @@
 class DSNLXml : public QObject {
     Q_OBJECT;
 
- protected:
-
     QNetworkAccessManager* nam;
+
+ protected:
 
     const QUrl& src;
 

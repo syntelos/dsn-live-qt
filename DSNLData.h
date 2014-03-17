@@ -19,6 +19,10 @@
 #define _DSNL_DSNLData_H
 
 #include "DSNLXml.h"
+#include <QList>
+#include <QTextStream>
+
+#include "DSNLDataStation.h"
 
 /*!
  * 
@@ -27,8 +31,17 @@ class DSNLData : public DSNLXml {
     Q_OBJECT;
 
  public:
+
+    QDateTime timestamp;
+
+    QList<DSNLDataStation*> stations;
+
     DSNLData(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
     ~DSNLData();
+
+    void clear();
+
+    void print(QTextStream&);
 
     virtual void readDom();
 

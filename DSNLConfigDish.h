@@ -18,14 +18,26 @@
 #ifndef _DSNL_DSNLConfigDish_H
 #define _DSNL_DSNLConfigDish_H
 
+#include <QString>
+#include <QTextStream>
+
 /*!
  * 
  */
 class DSNLConfigDish {
 
  public:
-    DSNLConfigDish();
+
+    const QString site;
+    const QString system;
+    const QString display;
+    const QString type;
+
+    DSNLConfigDish(QString,QString,QString,QString);
+    DSNLConfigDish(const DSNLConfigDish&);
     ~DSNLConfigDish();
+
+    void print(QTextStream&);
 
 };
 #endif
