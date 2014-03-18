@@ -16,16 +16,16 @@
  * program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
+#include <QCoreApplication>
 
 #include "DSNL.h"
 
 /**
  * This class provides DSNL/Qt slots for connecting and disconnecting
- * the \class QApplication quit slot with session, catalog and bind
+ * the \class QCoreApplication quit slot with session, catalog and bind
  * failure signals.
  */
-class Main : public QApplication {
+class Main : public QCoreApplication {
     Q_OBJECT;
 
  public:

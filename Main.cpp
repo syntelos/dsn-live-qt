@@ -23,7 +23,7 @@
 
 
 Main::Main(int argc, char** argv)
-    : QApplication(argc,argv), nam(new QNetworkAccessManager(this)), dsnl(new DSNL(nam))
+    : QCoreApplication(argc,argv), nam(new QNetworkAccessManager(this)), dsnl(new DSNL(nam))
 {
 }
 Main::~Main(){
