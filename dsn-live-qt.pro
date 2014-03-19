@@ -19,6 +19,11 @@ HEADERS += DSNL.h \
            DSNLDataStationSignal.h \
            DSNLDataStationTarget.h \
            DSNLXml.h \
+           HTTPStreamClient.h \
+           HTTPStreamHeader.h \
+           HTTPStreamIO.h \
+           HTTPStreamRequest.h \
+           HTTPStreamResponse.h \
            Main.h
 
 SOURCES += DSNL.cpp \
@@ -32,4 +37,8 @@ SOURCES += DSNL.cpp \
            DSNLDataStationSignal.cpp \
            DSNLDataStationTarget.cpp \
            DSNLXml.cpp \
+           HTTPStreamClient.cpp \
+           HTTPStreamIO.cpp \
+           HTTPStreamRequest.cpp \
+           HTTPStreamResponse.cpp \
            Main.cpp
