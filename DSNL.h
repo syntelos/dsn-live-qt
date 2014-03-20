@@ -24,7 +24,8 @@
 #include <QTextStream>
 
 /*!
- * 
+ * A conventional HTTP GET (fetch file) user of \class
+ * HTTPStreamClient.
  */
 class DSNL : public QObject {
     Q_OBJECT;
@@ -37,7 +38,7 @@ class DSNL : public QObject {
 
     DSNLData* data;
 
-    DSNL(QNetworkAccessManager*);
+    DSNL(HTTPStreamClient*);
     ~DSNL();
 
     void print(QTextStream&);

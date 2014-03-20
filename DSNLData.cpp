@@ -22,7 +22,7 @@
 #include "DSNLDataStationSignal.h"
 #include "DSNLDataStationTarget.h"
 
-DSNLData::DSNLData(QNetworkAccessManager* nam, const QUrl& src, QObject* p)
+DSNLData::DSNLData(HTTPStreamClient* nam, const QUrl& src, QObject* p)
     : DSNLXml(nam,src,p), stations()
 {
 }
@@ -52,12 +52,12 @@ void DSNLData::print(QTextStream& out){
         it++;
     }
 }
-void DSNLData::readDom(){
+void DSNLData::read(){
 
-    QDomElement el_dsn = dom->documentElement();
+    QDomElement el_dsn = dom.documentElement();
     if (!el_dsn.isNull()){
 
-        qDebug() << "data readDom <not null>";
+        qDebug() << "data read <not null>";
 
         clear();
 
@@ -75,7 +75,7 @@ void DSNLData::readDom(){
                 station = new DSNLDataStation(el.attribute("name"),el.attribute("friendlyName"),el.attribute("timeUTC"),el.attribute("timeZoneOffset"));
                 stations.push_back(station);
 
-                qDebug() << "data readDom station " << station->system;
+                qDebug() << "data read station " << station->system;
 
             }
             else if (el_tn == "dish"){
@@ -84,7 +84,7 @@ void DSNLData::readDom(){
 
                 station->dishes.push_back(dish);
 
-                qDebug() << "data readDom dish " << dish->system;
+                qDebug() << "data read dish " << dish->system;
 
                 uint lidx;
 
@@ -101,7 +101,7 @@ void DSNLData::readDom(){
                                                                               lel.attribute("power"),
                                                                               lel.attribute("spacecraft"));
 
-                    qDebug() << "data readDom signal down " << signal->spacecraft;
+                    qDebug() << "data read signal down " << signal->spacecraft;
 
                     dish->signal.push_back(signal);
                 }
@@ -119,7 +119,7 @@ void DSNLData::readDom(){
                                                                               lel.attribute("power"),
                                                                               lel.attribute("spacecraft"));
 
-                    qDebug() << "data readDom signal up " << signal->spacecraft;
+                    qDebug() << "data read signal up " << signal->spacecraft;
 
                     dish->signal.push_back(signal);
                 }
@@ -135,7 +135,7 @@ void DSNLData::readDom(){
                                                                               lel.attribute("downlegRange"),
                                                                               lel.attribute("rtlt"));
 
-                    qDebug() << "data readDom target " << target->system;
+                    qDebug() << "data read target " << target->system;
 
                     dish->target.push_back(target);
                 }
@@ -147,11 +147,11 @@ void DSNLData::readDom(){
 
                 this->timestamp = QDateTime::fromMSecsSinceEpoch(value.toLongLong());
 
-                qDebug() << "data readDom timestamp " << timestamp;
+                qDebug() << "data read timestamp " << timestamp;
             }
         }
     }
     else {
-        qDebug() << "data readDom <null>";
+        qDebug() << "data read <null>";
     }
 }

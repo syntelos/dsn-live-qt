@@ -29,6 +29,34 @@ void HTTPStreamIO::clear(){
 }
 /*!
  */
+bool HTTPStreamIO::hasHeader(const QVariant& name){
+    const int count = QList::size();
+    int cc;
+    for (cc = 0; cc < count; cc++){
+        const HTTPStreamHeader& h = QList<HTTPStreamHeader>::at(cc);
+        if (h == name){
+
+            return true;
+        }
+    }
+    return false;
+}
+/*!
+ */
+bool HTTPStreamIO::hasNotHeader(const QVariant& name){
+    const int count = QList::size();
+    int cc;
+    for (cc = 0; cc < count; cc++){
+        const HTTPStreamHeader& h = QList<HTTPStreamHeader>::at(cc);
+        if (h == name){
+
+            return false;
+        }
+    }
+    return true;
+}
+/*!
+ */
 void HTTPStreamIO::setHeader(const QVariant& name, const QVariant& value){
     const int count = QList::size();
     int cc;

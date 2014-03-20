@@ -36,14 +36,14 @@ class DSNLData : public DSNLXml {
 
     QList<DSNLDataStation*> stations;
 
-    DSNLData(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
+    DSNLData(HTTPStreamClient*, const QUrl&, QObject* p = 0);
     ~DSNLData();
 
     void clear();
 
     void print(QTextStream&);
 
-    virtual void readDom();
+    virtual void read();
 
 };
 #endif

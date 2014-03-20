@@ -22,6 +22,11 @@ HTTPStreamRequest::HTTPStreamRequest()
     : HTTPStreamIO(), method("POST"), path(), protocol("HTTP/1.1")
 {
 }
+HTTPStreamRequest::HTTPStreamRequest(const QUrl& src)
+    : HTTPStreamIO(), method("GET"), path(src.path()), protocol("HTTP/1.1")
+{
+    setHeader("Host",src.host());
+}
 bool HTTPStreamRequest::isValid(){
     return (method.isValid() && path.isValid() && protocol.isValid() && 0 < QList::size());
 }
@@ -87,7 +92,7 @@ void HTTPStreamRequest::write(HTTP::Device* io){
             setHeader("Content-Length", len);
         }
 
-        {
+        if (hasNotHeader("Host")){
             QString hostname = io->peerName();
             quint16 portnum = io->peerPort();
             if (0 != portnum && 80 != portnum){
@@ -97,7 +102,9 @@ void HTTPStreamRequest::write(HTTP::Device* io){
             }
             setHeader("Host", hostname);
         }
-
+        /*
+         * Headers
+         */
         const QList<HTTPStreamHeader>& headers = *this;
 
         foreach (const HTTPStreamHeader& h, headers){
@@ -105,7 +112,9 @@ void HTTPStreamRequest::write(HTTP::Device* io){
             io->write(HTTP::CRLF);
         }
         io->write(HTTP::CRLF);
-
+        /*
+         * Body
+         */
         if (0 < len){
             const QByteArray& body = QBuffer::buffer();
             io->write(body);

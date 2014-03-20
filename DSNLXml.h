@@ -20,9 +20,10 @@
 
 #include <QDomDocument>
 #include <QObject>
-#include <QNetworkAccessManager>
-#include <QNetworkRequest>
-#include <QNetworkReply>
+#include "HTTPStreamClient.h"
+#include "HTTPStreamRequest.h"
+#include "HTTPStreamResponse.h"
+
 #include <QUrl>
 
 /*!
@@ -31,26 +32,28 @@
 class DSNLXml : public QObject {
     Q_OBJECT;
 
-    QNetworkAccessManager* nam;
+    HTTPStreamClient* httpc;
 
  protected:
 
     const QUrl& src;
 
-    QNetworkReply *response;
+    HTTPStreamRequest q;
 
-    QDomDocument *dom;
+    HTTPStreamResponse p;
+
+    QDomDocument dom;
 
  public:
-    DSNLXml(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
+    DSNLXml(HTTPStreamClient*, const QUrl&, QObject* p = 0);
     ~DSNLXml();
 
-    virtual void readDom() = 0;
+    void io();
+
+    virtual void read() = 0;
 
  public slots:
     void update();
-    void read();
-    void error(QNetworkReply::NetworkError);
 
  signals:
     void completed();

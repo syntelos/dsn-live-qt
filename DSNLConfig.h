@@ -40,14 +40,14 @@ class DSNLConfig : public DSNLXml {
 
     QMap<QString,DSNLConfigSpacecraft*> spacecraft;
 
-    DSNLConfig(QNetworkAccessManager*, const QUrl&, QObject* p = 0);
+    DSNLConfig(HTTPStreamClient*, const QUrl&, QObject* p = 0);
     ~DSNLConfig();
 
     void clear();
 
     void print(QTextStream&);
 
-    virtual void readDom();
+    virtual void read();
 
 };
 #endif

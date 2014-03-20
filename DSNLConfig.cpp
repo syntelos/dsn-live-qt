@@ -21,7 +21,7 @@
 #include <QDomElement>
 #include <QDomNodeList>
 
-DSNLConfig::DSNLConfig(QNetworkAccessManager* nam, const QUrl& src, QObject* p)
+DSNLConfig::DSNLConfig(HTTPStreamClient* nam, const QUrl& src, QObject* p)
     : DSNLXml(nam,src,p)
 {
 }
@@ -90,12 +90,12 @@ void DSNLConfig::print(QTextStream& out){
         }
     }
 }
-void DSNLConfig::readDom(){
+void DSNLConfig::read(){
 
-    QDomElement el_config = dom->documentElement();
+    QDomElement el_config = dom.documentElement();
     if (!el_config.isNull()){
 
-        qDebug() << "config readDom <not null>";
+        qDebug() << "config read <not null>";
 
         clear();
 
@@ -110,7 +110,7 @@ void DSNLConfig::readDom(){
 
                 this->sites[site->system] = site;
 
-                qDebug() << "config readDom site " << site->system;
+                qDebug() << "config read site " << site->system;
 
                 QDomNodeList dishes = el_site.childNodes();
                 const uint dishes_len = dishes.length();
@@ -124,7 +124,7 @@ void DSNLConfig::readDom(){
 
                     site->dishes[dish->system] = dish;
 
-                    qDebug() << "config readDom site " << site->system << ", dish " << dish->system;
+                    qDebug() << "config read site " << site->system << ", dish " << dish->system;
                 }
             }
         }
@@ -139,11 +139,11 @@ void DSNLConfig::readDom(){
 
                 this->spacecraft[sc->system] = sc;
 
-                qDebug() << "config readDom spacecraft " << sc->system;
+                qDebug() << "config read spacecraft " << sc->system;
             }
         }
     }
     else {
-        qDebug() << "config readDom <null>";
+        qDebug() << "config read <null>";
     }
 }

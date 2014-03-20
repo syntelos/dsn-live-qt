@@ -19,155 +19,55 @@
 
 #include "DSNLXml.h"
 
-DSNLXml::DSNLXml(QNetworkAccessManager* nam, const QUrl& src, QObject* p)
-    : QObject(p), nam(nam), src(src), response(0), dom(0)
+DSNLXml::DSNLXml(HTTPStreamClient* httpc, const QUrl& src, QObject* p)
+    : QObject(p), httpc(httpc), src(src), q(src), p(), dom()
 {
+    q.setHeader("User-Agent","Syntelos-DSN-Live/1.0");
 }
 DSNLXml::~DSNLXml()
 {
-    if (0 != dom){
-        delete dom;
-        dom = 0;
-    }
-    if (0 != response){
-        delete response;
-        response = 0;
-    }
 }
 void DSNLXml::update(){
-    if (0 != response){
-        delete response;
-    }
+
     qDebug() << "update";
+    if (httpc->isOpen()){
 
-    QNetworkRequest q(src);
-    q.setRawHeader("User-Agent","Syntelos-DSN-Live/1.0");
-
-    response = nam->get(q);
-    QObject::connect(response,SIGNAL(readyRead()),this,SLOT(read()));
-    QObject::connect(response,SIGNAL(error(QNetworkReply::NetworkError)),this,SLOT(error(QNetworkReply::NetworkError)));
-}
-void DSNLXml::read(){
-    if (0 != dom){
-        delete dom;
+        io();
     }
-    qDebug() << "read <begin>";
+    else {
+        int port = src.port();
+        if (-1 == port){
+            port = 80;
+        }
+        httpc->connectToHost(src.host(),port);
 
-    dom = new QDomDocument();
-    dom->setContent(response,true);
+        if (httpc->waitForConnected()){
 
-    readDom();
-
-    qDebug() << "read <end>";
-
-    response->close();
-
-    delete dom;
-    dom = 0;
-
-    response->deleteLater();
-    response = 0;
+            io();
+        }
+        else {
+            emit failed();
+        }
+    }
 }
-void DSNLXml::error(QNetworkReply::NetworkError code){
+void DSNLXml::io(){
 
-    switch(code){
-    case QNetworkReply::NoError:
-        qDebug() << "error: none";
-        break;
-    case QNetworkReply::ConnectionRefusedError:
-        qDebug() << "error: connection refused";
+    qDebug() << "io <begin>";
+
+    q.write(httpc);
+    p.read(httpc);
+
+    if (p.isOk()){
+
+        dom.setContent(&p,true);
+
+        read();
+
+        qDebug() << "io <end>";
+    }
+    else {
+        qDebug() << "io <failure>";
+
         emit failed();
-        break;
-    case QNetworkReply::RemoteHostClosedError:
-        qDebug() << "error: remote host closed";
-        emit failed();
-        break;
-    case QNetworkReply::HostNotFoundError:
-        qDebug() << "error: host not found";
-        emit failed();
-        break;
-    case QNetworkReply::TimeoutError:
-        qDebug() << "error: timeout";
-        emit failed();
-        break;
-    case QNetworkReply::OperationCanceledError:
-        //qDebug() << "error: operation cancelled";
-        break;
-    case QNetworkReply::SslHandshakeFailedError:
-        qDebug() << "error: ssl handshake failed";
-        emit failed();
-        break;
-    case QNetworkReply::TemporaryNetworkFailureError:
-        qDebug() << "error: temporary network failure";
-        emit failed();
-        break;
-    case QNetworkReply::ProxyConnectionRefusedError:
-        qDebug() << "error: proxy connection refused";
-        emit failed();
-        break;
-    case QNetworkReply::ProxyConnectionClosedError:
-        qDebug() << "error: proxy connection closed";
-        emit failed();
-        break;
-    case QNetworkReply::ProxyNotFoundError:
-        qDebug() << "error: proxy not found";
-        emit failed();
-        break;
-    case QNetworkReply::ProxyTimeoutError:
-        qDebug() << "error: proxy timeout";
-        emit failed();
-        break;
-    case QNetworkReply::ProxyAuthenticationRequiredError:
-        qDebug() << "error: proxy authentication required";
-        emit failed();
-        break;
-    case QNetworkReply::ContentAccessDenied:
-        qDebug() << "error: access denied";
-        emit failed();
-        break;
-    case QNetworkReply::ContentOperationNotPermittedError:
-        qDebug() << "error: operation not permitted";
-        emit failed();
-        break;
-    case QNetworkReply::ContentNotFoundError:
-        qDebug() << "error: content not found";
-        emit failed();
-        break;
-    case QNetworkReply::AuthenticationRequiredError:
-        qDebug() << "error: authentication required";
-        emit failed();
-        break;
-    case QNetworkReply::ContentReSendError:
-        qDebug() << "error: content resend";
-        emit failed();
-        break;
-    case QNetworkReply::ProtocolUnknownError:
-        qDebug() << "error: unknown";
-        emit failed();
-        break;
-    case QNetworkReply::ProtocolInvalidOperationError:
-        qDebug() << "error: invalid operation";
-        emit failed();
-        break;
-    case QNetworkReply::UnknownNetworkError:
-        qDebug() << "error: network";
-        emit failed();
-        break;
-    case QNetworkReply::UnknownProxyError:
-        qDebug() << "error: proxy";
-        emit failed();
-        break;
-    case QNetworkReply::UnknownContentError:
-        qDebug() << "error: unknown content";
-        emit failed();
-        break;
-    case QNetworkReply::ProtocolFailure:
-        qDebug() << "error: protocol failure";
-        emit failed();
-        break;
-    default:
-        qDebug() << "error: <code unknown>";
-        emit failed();
-        break;
     }
 }

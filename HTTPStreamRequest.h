@@ -19,6 +19,7 @@
 #define _ISSL_HTTPStreamRequest_H
 
 #include <QVariant>
+#include <QUrl>
 
 #include "HTTPStreamIO.h"
 
@@ -31,7 +32,14 @@ struct HTTPStreamRequest : public HTTPStreamIO {
     QVariant path;
     QVariant protocol;
 
+    /*!
+     * Default method POST 
+     */
     HTTPStreamRequest();
+    /*!
+     * Default method GET
+     */
+    HTTPStreamRequest(const QUrl& src);
 
     void clear();
 

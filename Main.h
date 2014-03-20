@@ -22,15 +22,16 @@
 
 /**
  * This class provides DSNL/Qt slots for connecting and disconnecting
- * the \class QCoreApplication quit slot with session, catalog and bind
- * failure signals.
+ * the \class QCoreApplication quit slot with session, catalog and
+ * bind failure signals.  It is an example of driving this package --
+ * from the command line.
  */
 class Main : public QCoreApplication {
     Q_OBJECT;
 
  public:
 
-    QNetworkAccessManager *nam;
+    HTTPStreamClient *httpc;
 
     DSNL *dsnl;
 

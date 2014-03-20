@@ -30,7 +30,8 @@ namespace HTTP {
     static const char* SP = " ";
     static const char* CRLF = "\r\n";
     /*!
-     * Argument to HTTPStreamIO read and write.
+     * Argument to HTTPStreamIO read and write abstracts from \class
+     * QTcpSocket.
      */
     struct Device {
 
@@ -53,17 +54,49 @@ namespace HTTP {
 }
 
 /*!
- * 
+ * A \class QIODevice for HTTP entity body buffers: subclasses \class
+ * HTTPStreamRequest and \class HTTPStreamResponse.
  */
 struct HTTPStreamIO : public QList<HTTPStreamHeader>, public QBuffer {
+    /*!
+     */
     HTTPStreamIO();
 
+    /*!
+     * Prepare for reading, vacate all state
+     */
     void clear();
+    /*!
+     * Check unique item in list by name
+     */
+    bool hasHeader(const QVariant& name);
+    /*!
+     * Check unique item in list by name
+     */
+    bool hasNotHeader(const QVariant& name);
+    /*!
+     * Set unique item in list by name
+     */
     void setHeader(const QVariant& name, const QVariant& value);
+    /*!
+     * Fetch item from list by name
+     */
     const QVariant& getHeader(const QVariant& name) const;
+    /*!
+     * Header convenience
+     */
     void setContentLength(uint len);
+    /*!
+     * Header convenience
+     */
     uint getContentLength() const;
+    /*!
+     * Header convenience
+     */
     void setContentType(const QVariant& string);
+    /*!
+     * Header convenience
+     */
     QString getContentType() const;
     /*!
      * Whether content of this data structure forms a valid HTTP

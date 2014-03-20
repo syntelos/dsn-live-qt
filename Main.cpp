@@ -23,7 +23,7 @@
 
 
 Main::Main(int argc, char** argv)
-    : QCoreApplication(argc,argv), nam(new QNetworkAccessManager(this)), dsnl(new DSNL(nam))
+    : QCoreApplication(argc,argv), httpc(new HTTPStreamClient(this)), dsnl(new DSNL(httpc))
 {
 }
 Main::~Main(){
@@ -32,9 +32,9 @@ Main::~Main(){
         dsnl->deleteLater();
         dsnl = 0;
     }
-    if (0 != nam){
-        nam->deleteLater();
-        nam = 0;
+    if (0 != httpc){
+        httpc->deleteLater();
+        httpc = 0;
     }
 }
 
