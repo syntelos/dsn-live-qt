@@ -14,6 +14,9 @@ data XML and transforms content into maps and lists.
     then subsequently polls the data file for each call to
     DSNL::update (e.g. no more than once per second).
 
+    The command line driver prints a subset of the information
+    transformed into objects for debugging purposes.
+
   Package
 
     Files DSNL*.{h,cpp}
