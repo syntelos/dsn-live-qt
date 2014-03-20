@@ -25,7 +25,8 @@
 /*!
  * 
  */
-struct HTTPStreamResponse : public HTTPStreamIO {
+class HTTPStreamResponse : public HTTPStreamIO {
+ public:
 
     QVariant protocol;
     QVariant status;

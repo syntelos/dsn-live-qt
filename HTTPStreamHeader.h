@@ -24,7 +24,8 @@
 /*!
  * 
  */
-struct HTTPStreamHeader {
+class HTTPStreamHeader {
+ public:
 
     QVariant name;
     QVariant value;

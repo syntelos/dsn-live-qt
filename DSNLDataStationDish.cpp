@@ -21,7 +21,7 @@
 DSNLDataStationDish::DSNLDataStationDish(const QString& system, const QString& az, const QString& el, 
                                          const QString& cr, const QString& up)
     : system(system), azimuth(az.toDouble()), elevation(el.toDouble()), 
-      created(QDateTime::fromString(cr)), updated(QDateTime::fromString(up)),
+      created(QDateTime::fromString(cr,Qt::ISODate)), updated(QDateTime::fromString(up,Qt::ISODate)),
       signal(), target()
 {
 }
@@ -53,6 +53,7 @@ DSNLDataStationDish::~DSNLDataStationDish()
 void DSNLDataStationDish::print(QTextStream& out){
 
     out << "\tdish " << system << ", az " << azimuth << ", el " << elevation << endl;
+    out << "\t created " << created.toString() << ", updated " << updated.toString() << endl;
     {
         QList<DSNLDataStationSignal*>::iterator it = signal.begin();
         QList<DSNLDataStationSignal*>::iterator end = signal.end();

@@ -26,7 +26,8 @@
 /*!
  * 
  */
-struct HTTPStreamRequest : public HTTPStreamIO {
+class HTTPStreamRequest : public HTTPStreamIO {
+ public:
 
     QVariant method;
     QVariant path;

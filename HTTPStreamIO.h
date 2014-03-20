@@ -57,7 +57,8 @@ namespace HTTP {
  * A \class QIODevice for HTTP entity body buffers: subclasses \class
  * HTTPStreamRequest and \class HTTPStreamResponse.
  */
-struct HTTPStreamIO : public QList<HTTPStreamHeader>, public QBuffer {
+class HTTPStreamIO : public QList<HTTPStreamHeader>, public QBuffer {
+ public:
     /*!
      */
     HTTPStreamIO();
