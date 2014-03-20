@@ -32,7 +32,7 @@ class DSNLDataStationTarget {
     const double downlegRange;
     const double rtlt;
 
-    DSNLDataStationTarget(QString,QString,QString,QString);
+    DSNLDataStationTarget(const QString&,const QString&,const QString&,const QString&);
     ~DSNLDataStationTarget();
 
     void print(QTextStream&);

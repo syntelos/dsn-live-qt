@@ -41,7 +41,7 @@ class DSNLDataStationDish {
     QList<DSNLDataStationSignal*> signal;
     QList<DSNLDataStationTarget*> target;
 
-    DSNLDataStationDish(QString,QString,QString,QString,QString);
+    DSNLDataStationDish(const QString&,const QString&,const QString&,const QString&,const QString&);
     ~DSNLDataStationDish();
 
     void print(QTextStream&);

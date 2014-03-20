@@ -18,7 +18,8 @@
 
 #include "DSNLDataStationDish.h"
 
-DSNLDataStationDish::DSNLDataStationDish(QString system, QString az, QString el, QString cr, QString up)
+DSNLDataStationDish::DSNLDataStationDish(const QString& system, const QString& az, const QString& el, 
+                                         const QString& cr, const QString& up)
     : system(system), azimuth(az.toDouble()), elevation(el.toDouble()), 
       created(QDateTime::fromString(cr)), updated(QDateTime::fromString(up)),
       signal(), target()

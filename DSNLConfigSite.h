@@ -37,7 +37,7 @@ class DSNLConfigSite {
 
     QMap<QString,DSNLConfigDish*> dishes;
 
-    DSNLConfigSite(QString,QString,QString);
+    DSNLConfigSite(const QString&,const QString&,const QString&);
     DSNLConfigSite(const DSNLConfigSite&);
     ~DSNLConfigSite();
 

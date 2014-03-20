@@ -19,7 +19,7 @@
 
 #include "DSNLDataStationSignal.h"
 
-DSNLDataStationSignal::Type DSNLDataStationSignal::TypeOf(QString string){
+DSNLDataStationSignal::Type DSNLDataStationSignal::TypeOf(const QString& string){
     if (string == "none"){
         return DSNLDataStationSignal::TypeNone;
     }
@@ -33,7 +33,7 @@ DSNLDataStationSignal::Type DSNLDataStationSignal::TypeOf(QString string){
         return DSNLDataStationSignal::TypeUnrecognized;
     }
 }
-double DSNLDataStationSignal::PowerOf(Direction direction, QString string){
+double DSNLDataStationSignal::PowerOf(Direction direction, const QString& string){
     bool ok;
     double value = string.toDouble(&ok);
     if (ok){
@@ -49,8 +49,9 @@ double DSNLDataStationSignal::PowerOf(Direction direction, QString string){
     else
         return 0.0;
 }
-DSNLDataStationSignal::DSNLDataStationSignal(Direction direction, QString type, QString rate, QString frequency,
-                                             QString power, QString spacecraft)
+DSNLDataStationSignal::DSNLDataStationSignal(Direction direction, const QString& type, const QString& rate, 
+                                             const QString& frequency, const QString& power, 
+                                             const QString& spacecraft)
     : direction(direction), type(TypeOf(type)), 
       dataRate(rate.toDouble()), frequency(frequency.toDouble()),
       power(PowerOf(direction,power)), spacecraft(spacecraft)

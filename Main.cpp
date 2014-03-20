@@ -47,7 +47,7 @@ int main(int argc, char** argv){
 
     QTimer *timer = new QTimer();
     QObject::connect(timer,SIGNAL(timeout()),main.dsnl,SLOT(updatep()));
-    timer->setInterval(3000);
+    timer->setInterval(5000);
     timer->start();
 
     return main.exec();

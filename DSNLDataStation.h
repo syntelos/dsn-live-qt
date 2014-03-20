@@ -33,14 +33,17 @@ class DSNLDataStation {
     const QString system;
     const QString display;
     const QDateTime timeUTC;
-    const QDateTime timeZoneOffset;
+    const int timeZoneOffset;
 
     QList<DSNLDataStationDish*> dishes;
 
-    DSNLDataStation(QString,QString,QString,QString);
+    DSNLDataStation(const QString&,const QString&,const QString&,const QString&);
     ~DSNLDataStation();
 
     void print(QTextStream&);
+
+    static QDateTime ConvertTimeUTC(const QString&);
+    static int ConvertTimeZoneOfs(const QString&);
 
 };
 #endif

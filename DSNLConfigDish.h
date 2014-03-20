@@ -33,7 +33,7 @@ class DSNLConfigDish {
     const QString display;
     const QString type;
 
-    DSNLConfigDish(QString,QString,QString,QString);
+    DSNLConfigDish(const QString&,const QString&,const QString&,const QString&);
     DSNLConfigDish(const DSNLConfigDish&);
     ~DSNLConfigDish();
 

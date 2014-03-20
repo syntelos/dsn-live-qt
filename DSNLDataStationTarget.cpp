@@ -18,7 +18,8 @@
 
 #include "DSNLDataStationTarget.h"
 
-DSNLDataStationTarget::DSNLDataStationTarget(QString system, QString uplegRange, QString downlegRange, QString rtlt)
+DSNLDataStationTarget::DSNLDataStationTarget(const QString& system, const QString& uplegRange, 
+                                             const QString& downlegRange, const QString& rtlt)
     : system(system), 
       uplegRange(uplegRange.toDouble()), downlegRange(downlegRange.toDouble()), 
       rtlt(rtlt.toDouble())

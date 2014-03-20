@@ -18,7 +18,7 @@
 
 #include "DSNLConfigSite.h"
 
-DSNLConfigSite::DSNLConfigSite(QString system, QString display, QString flag)
+DSNLConfigSite::DSNLConfigSite(const QString& system, const QString& display, const QString& flag)
     : system(system), display(display), flag(flag), dishes()
 {
 }
@@ -41,7 +41,7 @@ void DSNLConfigSite::clear(){
 }
 void DSNLConfigSite::print(QTextStream& out)
 {
-    out << "site: " << system << ", '" << display << "'" << endl;
+    out << "\tsite " << system << ", '" << display << "'" << endl;
     {
         QMap<QString,DSNLConfigDish*>::iterator it = dishes.begin();
         QMap<QString,DSNLConfigDish*>::iterator end = dishes.end();

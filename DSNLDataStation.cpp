@@ -18,9 +18,9 @@
 
 #include "DSNLDataStation.h"
 
-DSNLDataStation::DSNLDataStation(QString system, QString display, QString utc, QString tzo)
+DSNLDataStation::DSNLDataStation(const QString& system, const QString& display, const QString& utc, const QString& tzo)
     : system(system), display(display), 
-      timeUTC(QDateTime::fromString(utc)), timeZoneOffset(QDateTime::fromString(tzo)),
+      timeUTC(ConvertTimeUTC(utc)), timeZoneOffset(ConvertTimeZoneOfs(tzo)),
       dishes()
 {
 }
@@ -38,7 +38,7 @@ DSNLDataStation::~DSNLDataStation()
 }
 void DSNLDataStation::print(QTextStream& out){
 
-    out << "data station " << system << " '" << display << "'" << endl;
+    out << "data station " << system << " '" << display << "', time " << timeUTC.toString() << endl;
 
     QList<DSNLDataStationDish*>::iterator it = dishes.begin();
     QList<DSNLDataStationDish*>::iterator end = dishes.end();
@@ -46,5 +46,26 @@ void DSNLDataStation::print(QTextStream& out){
         DSNLDataStationDish* dish = *it++;
 
         dish->print(out);
+    }
+}
+QDateTime DSNLDataStation::ConvertTimeUTC(const QString& string){
+    bool ok;
+    qint64 value = string.toLongLong(&ok);
+    if (ok){
+        return QDateTime::fromMSecsSinceEpoch(value);
+    }
+    else {
+        QDateTime nil;
+        return nil;
+    }
+}
+int DSNLDataStation::ConvertTimeZoneOfs(const QString& string){
+    bool ok;
+    int value = string.toInt(&ok);
+    if (ok){
+        return value;
+    }
+    else {
+        return 0;
     }
 }

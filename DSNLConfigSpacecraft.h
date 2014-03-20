@@ -32,7 +32,7 @@ class DSNLConfigSpacecraft {
     const QString display;
 
     DSNLConfigSpacecraft();
-    DSNLConfigSpacecraft(QString,QString);
+    DSNLConfigSpacecraft(const QString&,const QString&);
     DSNLConfigSpacecraft(const DSNLConfigSpacecraft&);
     ~DSNLConfigSpacecraft();
 

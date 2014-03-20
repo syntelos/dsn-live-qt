@@ -69,6 +69,8 @@ void DSNLXml::io(){
 
     if (p.isOk()){
 
+        // qDebug() << p.QBuffer::data() // print XML 
+
         dom.setContent(&p,true);
 
         read();

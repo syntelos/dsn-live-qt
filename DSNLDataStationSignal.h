@@ -37,9 +37,9 @@ class DSNLDataStationSignal {
         TypeCarrier,
         TypeData
     };
-    static Type TypeOf(QString);
+    static Type TypeOf(const QString&);
 
-    static double PowerOf(Direction,QString);
+    static double PowerOf(Direction,const QString&);
 
     const Direction direction;
 
@@ -54,7 +54,7 @@ class DSNLDataStationSignal {
     const QString spacecraft; // system name
 
 
-    DSNLDataStationSignal(Direction,QString,QString,QString,QString,QString);
+    DSNLDataStationSignal(Direction,const QString&,const QString&,const QString&,const QString&,const QString&);
     ~DSNLDataStationSignal();
 
     void print(QTextStream&);

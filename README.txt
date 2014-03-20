@@ -4,15 +4,16 @@ data XML and transforms content into maps and lists.
 
   Status
 
-    Main.cpp runs well.
+    Main.cpp runs well, but the data is not current.
 
   Operation
 
-    Uses one HTTP/1.1 persistent connection (socket) for as many
-    request - response cycles as accepted by the server.  Fetches the
-    configuration catalog and data set by a call to DSNL::init, and
-    then subsequently polls the data file for each call to
-    DSNL::update (e.g. no more than once per second).
+    Fetches the configuration catalog and data set by a call to
+    DSNL::init, and then subsequently polls the data file for each
+    call to DSNL::update.
+
+    The command line driver, Main.cpp, prints a subset of the
+    retrieved data sets.
 
   Package
 
