@@ -17,6 +17,7 @@
  */
 
 #include "DSNLConfig.h"
+
 #include <QDebug>
 #include <QDomElement>
 #include <QDomNodeList>
@@ -95,8 +96,6 @@ void DSNLConfig::read(){
     QDomElement el_config = dom.documentElement();
     if (!el_config.isNull()){
 
-        qDebug() << "config read <not null>";
-
         clear();
 
         QDomNodeList sites = el_config.firstChild().childNodes();
@@ -110,7 +109,7 @@ void DSNLConfig::read(){
 
                 this->sites[site->system] = site;
 
-                qDebug() << "config read site " << site->system;
+                qDebug() << "config site " << site->system;
 
                 QDomNodeList dishes = el_site.childNodes();
                 const uint dishes_len = dishes.length();
@@ -124,7 +123,7 @@ void DSNLConfig::read(){
 
                     site->dishes[dish->system] = dish;
 
-                    qDebug() << "config read site " << site->system << ", dish " << dish->system;
+                    qDebug() << "config site " << site->system << ", dish " << dish->system;
                 }
             }
         }
@@ -139,11 +138,8 @@ void DSNLConfig::read(){
 
                 this->spacecraft[sc->system] = sc;
 
-                qDebug() << "config read spacecraft " << sc->system;
+                qDebug() << "config spacecraft " << sc->system;
             }
         }
-    }
-    else {
-        qDebug() << "config read <null>";
     }
 }

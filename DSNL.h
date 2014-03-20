@@ -52,6 +52,10 @@ class DSNL : public QObject {
      * Fetch data
      */
     void update();
+    /*
+     * Close socket 
+     */
+    void close();
 
  signals:
     /*

@@ -37,6 +37,8 @@ struct HTTPStreamResponse : public HTTPStreamIO {
 
     bool isOk();
 
+    virtual QByteArray headline();
+
     virtual bool isValid();
     /*!
      * Read response line, headers, and any response entity body

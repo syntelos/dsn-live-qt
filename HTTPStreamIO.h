@@ -99,6 +99,10 @@ struct HTTPStreamIO : public QList<HTTPStreamHeader>, public QBuffer {
      */
     QString getContentType() const;
     /*!
+     * Request or response line
+     */
+    virtual QByteArray headline() = 0;
+    /*!
      * Whether content of this data structure forms a valid HTTP
      * entity
      */
@@ -111,5 +115,9 @@ struct HTTPStreamIO : public QList<HTTPStreamHeader>, public QBuffer {
      * Write the content of this data structure
      */
     virtual void write(HTTP::Device* io) = 0;
+
+ protected:
+    void readTail(HTTP::Device* io);
+    void writeTail(HTTP::Device* io);
 };
 #endif

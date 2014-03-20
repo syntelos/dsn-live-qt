@@ -24,8 +24,7 @@ HTTPStreamIO::HTTPStreamIO()
 }
 void HTTPStreamIO::clear(){
     QList::clear();
-    QByteArray empty;
-    QBuffer::setData(empty);
+    QBuffer::close();
 }
 /*!
  */
@@ -114,5 +113,57 @@ QString HTTPStreamIO::getContentType() const {
     else {
         QString nil;
         return nil;
+    }
+}
+void HTTPStreamIO::readTail(HTTP::Device* io){
+    /*
+     * Headers
+     */
+    while (true){
+        HTTPStreamHeader h(io->readLine());
+        if (h.isValid())
+            QList<HTTPStreamHeader>::append(h);
+        else
+            break;
+    }
+    /*
+     * Body
+     */
+    qint64 entity_len = getContentLength();
+
+    if (0 < entity_len){
+
+        QByteArray input = io->read(entity_len);
+        qint64 input_len = input.size();
+
+        while (input_len < entity_len && io->waitForReadyRead()){
+            {
+                QByteArray buf = io->read(entity_len-input_len);
+                input += buf;
+            }
+            input_len = input.size();
+        }
+        QBuffer::setData(input);
+    }
+}
+void HTTPStreamIO::writeTail(HTTP::Device* io){
+    /*
+     * Headers
+     */
+    const QList<HTTPStreamHeader>& headers = *this;
+
+    foreach (const HTTPStreamHeader& h, headers){
+        io->write(h.toByteArray());
+        io->write(HTTP::CRLF);
+    }
+    io->write(HTTP::CRLF);
+    /*
+     * Body
+     */
+    if (0 < getContentLength()){
+
+        const QByteArray& body = QBuffer::buffer();
+
+        io->write(body);
     }
 }

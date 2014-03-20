@@ -54,6 +54,7 @@ class DSNLXml : public QObject {
 
  public slots:
     void update();
+    void close();
 
  signals:
     void completed();

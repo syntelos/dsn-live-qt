@@ -43,6 +43,8 @@ struct HTTPStreamRequest : public HTTPStreamIO {
 
     void clear();
 
+    virtual QByteArray headline();
+
     virtual bool isValid();
     /*!
      * The the request line, headers, and any request entity body

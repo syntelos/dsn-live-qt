@@ -76,15 +76,9 @@ HTTPStreamResponse* HTTPStreamClient::send(HTTPStreamRequest& q){
 HTTPStreamResponse* HTTPStreamClient::send(HTTPStreamRequest* q){
     if (isOpen() && 0 != q && q->isValid()){
 
-        qDebug() << "HTTPStreamClient.send [write]";
-
         q->write(this);
 
-        qDebug() << "HTTPStreamClient.send [p]";
-
         HTTPStreamResponse* p = new HTTPStreamResponse();
-
-        // qDebug() << "HTTPStreamClient.send [read]";
 
         p->read(this);
 

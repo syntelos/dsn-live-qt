@@ -57,8 +57,6 @@ void DSNLData::read(){
     QDomElement el_dsn = dom.documentElement();
     if (!el_dsn.isNull()){
 
-        qDebug() << "data read <not null>";
-
         clear();
 
         QDomNodeList dsn_list = el_dsn.childNodes();
@@ -75,7 +73,7 @@ void DSNLData::read(){
                 station = new DSNLDataStation(el.attribute("name"),el.attribute("friendlyName"),el.attribute("timeUTC"),el.attribute("timeZoneOffset"));
                 stations.push_back(station);
 
-                qDebug() << "data read station " << station->system;
+                qDebug() << "data station " << station->system;
 
             }
             else if (el_tn == "dish"){
@@ -84,7 +82,7 @@ void DSNLData::read(){
 
                 station->dishes.push_back(dish);
 
-                qDebug() << "data read dish " << dish->system;
+                qDebug() << "data dish " << dish->system;
 
                 uint lidx;
 
@@ -101,7 +99,7 @@ void DSNLData::read(){
                                                                               lel.attribute("power"),
                                                                               lel.attribute("spacecraft"));
 
-                    qDebug() << "data read signal down " << signal->spacecraft;
+                    qDebug() << "data signal down " << signal->spacecraft;
 
                     dish->signal.push_back(signal);
                 }
@@ -119,7 +117,7 @@ void DSNLData::read(){
                                                                               lel.attribute("power"),
                                                                               lel.attribute("spacecraft"));
 
-                    qDebug() << "data read signal up " << signal->spacecraft;
+                    qDebug() << "data signal up " << signal->spacecraft;
 
                     dish->signal.push_back(signal);
                 }
@@ -135,7 +133,7 @@ void DSNLData::read(){
                                                                               lel.attribute("downlegRange"),
                                                                               lel.attribute("rtlt"));
 
-                    qDebug() << "data read target " << target->system;
+                    qDebug() << "data target " << target->system;
 
                     dish->target.push_back(target);
                 }
@@ -143,15 +141,16 @@ void DSNLData::read(){
             }
             else if (el_tn == "timestamp"){
 
-                QString value = el.nodeValue();
+                QString value = el.firstChild().nodeValue();
 
-                this->timestamp = QDateTime::fromMSecsSinceEpoch(value.toLongLong());
+                bool ok;
+                qint64 udate = value.toLongLong(&ok);
+                if (ok){
 
-                qDebug() << "data read timestamp " << timestamp;
+                    this->timestamp = QDateTime::fromMSecsSinceEpoch(udate);
+                }
+                qDebug() << "data timestamp " << this->timestamp.toString();
             }
         }
-    }
-    else {
-        qDebug() << "data read <null>";
     }
 }

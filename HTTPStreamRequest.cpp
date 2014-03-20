@@ -27,6 +27,15 @@ HTTPStreamRequest::HTTPStreamRequest(const QUrl& src)
 {
     setHeader("Host",src.host());
 }
+QByteArray HTTPStreamRequest::headline(){
+    QByteArray string;
+    string += method.toByteArray();
+    string += ' ';
+    string += path.toByteArray();
+    string += ' ';
+    string += protocol.toByteArray();
+    return string;
+}
 bool HTTPStreamRequest::isValid(){
     return (method.isValid() && path.isValid() && protocol.isValid() && 0 < QList::size());
 }
@@ -54,24 +63,7 @@ void HTTPStreamRequest::read(HTTP::Device* io){
                 path.setValue(linary.at(1));
                 protocol.setValue(linary.at(1));
 
-                /*
-                 * Headers
-                 */
-                while (true){
-                    HTTPStreamHeader h(io->readLine());
-                    if (h.isValid())
-                        QList<HTTPStreamHeader>::append(h);
-                    else
-                        break;
-                }
-                /*
-                 * Body
-                 */
-                int body = getContentLength();
-                if (0 < body){
-                    QByteArray input = io->read(body);
-                    QBuffer::setData(input);
-                }
+                readTail(io);
             }
         }
     }
@@ -102,22 +94,7 @@ void HTTPStreamRequest::write(HTTP::Device* io){
             }
             setHeader("Host", hostname);
         }
-        /*
-         * Headers
-         */
-        const QList<HTTPStreamHeader>& headers = *this;
 
-        foreach (const HTTPStreamHeader& h, headers){
-            io->write(h.toByteArray());
-            io->write(HTTP::CRLF);
-        }
-        io->write(HTTP::CRLF);
-        /*
-         * Body
-         */
-        if (0 < len){
-            const QByteArray& body = QBuffer::buffer();
-            io->write(body);
-        }
+        writeTail(io);
     }
 }

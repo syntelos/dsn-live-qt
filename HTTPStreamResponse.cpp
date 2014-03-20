@@ -22,6 +22,16 @@ HTTPStreamResponse::HTTPStreamResponse()
     : HTTPStreamIO(), protocol(), status(), message()
 {
 }
+QByteArray HTTPStreamResponse::headline(){
+    QByteArray string;
+    string += protocol.toByteArray();
+    string += ' ';
+    string += status.toByteArray();
+    string += ' ';
+    string += message.toByteArray();
+
+    return string;
+}
 bool HTTPStreamResponse::isValid(){
     return (protocol.isValid() && status.isValid() && message.isValid() && 0 < QList::size());
 }
@@ -68,24 +78,7 @@ void HTTPStreamResponse::read(HTTP::Device* io){
                     message.setValue(msgbuf);
                 }
 
-                /*
-                 * Headers
-                 */
-                while (true){
-                    HTTPStreamHeader h(io->readLine());
-                    if (h.isValid())
-                        QList<HTTPStreamHeader>::append(h);
-                    else
-                        break;
-                }
-                /*
-                 * Body
-                 */
-                int body = getContentLength();
-                if (0 < body){
-                    QByteArray input = io->read(body);
-                    QBuffer::setData(input);
-                }
+                readTail(io);
             }
         }
     }
@@ -106,17 +99,6 @@ void HTTPStreamResponse::write(HTTP::Device* io){
             setHeader("Content-Length", len);
         }
 
-        const QList<HTTPStreamHeader>& headers = *this;
-
-        foreach (const HTTPStreamHeader& h, headers){
-            io->write(h.toByteArray());
-            io->write(HTTP::CRLF);
-        }
-        io->write(HTTP::CRLF);
-
-        if (0 < len){
-            const QByteArray& body = QBuffer::buffer();
-            io->write(body);
-        }
+        writeTail(io);
     }
 }

@@ -27,6 +27,10 @@ DSNLXml::DSNLXml(HTTPStreamClient* httpc, const QUrl& src, QObject* p)
 DSNLXml::~DSNLXml()
 {
 }
+void DSNLXml::close(){
+
+    httpc->close();
+}
 void DSNLXml::update(){
 
     qDebug() << "update";
@@ -52,21 +56,21 @@ void DSNLXml::update(){
 }
 void DSNLXml::io(){
 
-    qDebug() << "io <begin>";
+    qDebug() << q.headline().data();
 
     q.write(httpc);
+
     p.read(httpc);
+
+    qDebug() << p.headline().data();
 
     if (p.isOk()){
 
         dom.setContent(&p,true);
 
         read();
-
-        qDebug() << "io <end>";
     }
     else {
-        qDebug() << "io <failure>";
 
         emit failed();
     }
