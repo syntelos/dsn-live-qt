@@ -29,7 +29,7 @@ DSNL::DSNL(HTTPStreamClient* httpc)
     QObject::connect(data,SIGNAL(completed()),this,SIGNAL(completedData()));
     QObject::connect(data,SIGNAL(failed()),this,SIGNAL(failedData()));
 
-    QObject::connect(httpc,SIGNAL(error(QAbstractSocket::SocketError)),httpc,SLOT(close()));
+    QObject::connect(httpc,SIGNAL(error(QAbstractSocket::SocketError)),this,SLOT(close()));
     /* (printing)
      */
     QObject::connect(httpc,SIGNAL(error(QAbstractSocket::SocketError)),httpc,SLOT(printSocketError(QAbstractSocket::SocketError)));
