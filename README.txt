@@ -4,7 +4,7 @@ data XML and transforms content into maps and lists.
 
   Status
 
-    Debugged, appears to run well.
+    Main.cpp runs well.
 
   Operation
 
