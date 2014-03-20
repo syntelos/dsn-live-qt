@@ -4,7 +4,7 @@ data XML and transforms content into maps and lists.
 
   Status
 
-    Work in progress
+    Debugged, appears to run well.
 
   Operation
 
