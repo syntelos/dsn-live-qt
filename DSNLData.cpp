@@ -43,6 +43,10 @@ void DSNLData::clear(){
 }
 void DSNLData::print(QTextStream& out){
 
+    QDateTime current = QDateTime::currentDateTime();
+
+    out << "> current time " << current.toString() << endl;
+
     out << "data timestamp " << timestamp.toString() << endl;
 
     QList<DSNLDataStation*>::iterator it = stations.begin();
