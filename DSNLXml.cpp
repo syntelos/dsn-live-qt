@@ -33,8 +33,9 @@ void DSNLXml::close(){
 }
 void DSNLXml::update(){
 
-    qDebug() << "update";
     if (httpc->isOpen()){
+
+        qDebug() << "DSNLXml::update <continue>";
 
         io();
     }
@@ -46,6 +47,8 @@ void DSNLXml::update(){
         httpc->connectToHost(src.host(),port);
 
         if (httpc->waitForConnected()){
+
+            qDebug() << "DSNLXml::update <reopen>";
 
             io();
         }

@@ -60,6 +60,8 @@ void DSNLConfig::clear(){
     }
 }
 void DSNLConfig::print(QTextStream& out){
+
+    out << "config" << endl;
     {
         QMap<QString,DSNLConfigSite*>::iterator it = sites.begin();
         QMap<QString,DSNLConfigSite*>::iterator end = sites.end();
@@ -109,7 +111,7 @@ void DSNLConfig::read(){
 
                 this->sites[site->system] = site;
 
-                qDebug() << "config site " << site->system;
+                //qDebug() << "config site " << site->system;
 
                 QDomNodeList dishes = el_site.childNodes();
                 const uint dishes_len = dishes.length();
@@ -123,7 +125,7 @@ void DSNLConfig::read(){
 
                     site->dishes[dish->system] = dish;
 
-                    qDebug() << "config site " << site->system << ", dish " << dish->system;
+                    //qDebug() << "config site " << site->system << ", dish " << dish->system;
                 }
             }
         }
@@ -138,7 +140,7 @@ void DSNLConfig::read(){
 
                 this->spacecraft[sc->system] = sc;
 
-                qDebug() << "config spacecraft " << sc->system;
+                //qDebug() << "config spacecraft " << sc->system;
             }
         }
     }

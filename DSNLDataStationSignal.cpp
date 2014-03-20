@@ -60,7 +60,7 @@ DSNLDataStationSignal::~DSNLDataStationSignal()
 {
 }
 void DSNLDataStationSignal::print(QTextStream& out){
-    out << "signal ";
+    out << "\t\tsignal ";
 
     switch(direction){
     case DirectionUp:

@@ -49,9 +49,17 @@ class DSNL : public QObject {
      */
     void init();
     /*
+     * Fetch config and data and print
+     */
+    void initp();
+    /*
      * Fetch data
      */
     void update();
+    /*
+     * Fetch data and print
+     */
+    void updatep();
     /*
      * Close socket 
      */

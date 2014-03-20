@@ -42,14 +42,15 @@ void DSNLData::clear(){
     }
 }
 void DSNLData::print(QTextStream& out){
+
+    out << "data timestamp " << timestamp.toString() << endl;
+
     QList<DSNLDataStation*>::iterator it = stations.begin();
     QList<DSNLDataStation*>::iterator end = stations.end();
     while (it != end){
-        DSNLDataStation* station = *it;
+        DSNLDataStation* station = *it++;
 
         station->print(out);
-
-        it++;
     }
 }
 void DSNLData::read(){
@@ -73,7 +74,7 @@ void DSNLData::read(){
                 station = new DSNLDataStation(el.attribute("name"),el.attribute("friendlyName"),el.attribute("timeUTC"),el.attribute("timeZoneOffset"));
                 stations.push_back(station);
 
-                qDebug() << "data station " << station->system;
+                //qDebug() << "data station " << station->system;
 
             }
             else if (el_tn == "dish"){
@@ -82,7 +83,7 @@ void DSNLData::read(){
 
                 station->dishes.push_back(dish);
 
-                qDebug() << "data dish " << dish->system;
+                //qDebug() << "data dish " << dish->system;
 
                 uint lidx;
 
@@ -99,7 +100,7 @@ void DSNLData::read(){
                                                                               lel.attribute("power"),
                                                                               lel.attribute("spacecraft"));
 
-                    qDebug() << "data signal down " << signal->spacecraft;
+                    //qDebug() << "data signal down " << signal->spacecraft;
 
                     dish->signal.push_back(signal);
                 }
@@ -117,7 +118,7 @@ void DSNLData::read(){
                                                                               lel.attribute("power"),
                                                                               lel.attribute("spacecraft"));
 
-                    qDebug() << "data signal up " << signal->spacecraft;
+                    //qDebug() << "data signal up " << signal->spacecraft;
 
                     dish->signal.push_back(signal);
                 }
@@ -133,7 +134,7 @@ void DSNLData::read(){
                                                                               lel.attribute("downlegRange"),
                                                                               lel.attribute("rtlt"));
 
-                    qDebug() << "data target " << target->system;
+                    //qDebug() << "data target " << target->system;
 
                     dish->target.push_back(target);
                 }
@@ -149,7 +150,7 @@ void DSNLData::read(){
 
                     this->timestamp = QDateTime::fromMSecsSinceEpoch(udate);
                 }
-                qDebug() << "data timestamp " << this->timestamp.toString();
+                //qDebug() << "data timestamp " << this->timestamp.toString();
             }
         }
     }

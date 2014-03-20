@@ -28,5 +28,5 @@ DSNLDataStationTarget::~DSNLDataStationTarget()
 {
 }
 void DSNLDataStationTarget::print(QTextStream& out){
-    out << "target " << system << ", upleg " << uplegRange << ", downleg " << downlegRange << ", rtlt " << rtlt << endl;
+    out << "\t\ttarget " << system << ", upleg " << uplegRange << ", downleg " << downlegRange << ", rtlt " << rtlt << endl;
 }

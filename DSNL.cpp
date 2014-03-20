@@ -18,6 +18,8 @@
 
 #include "DSNL.h"
 
+#include <cstdio>
+
 const QUrl DSNL::UrlConfig("http://eyes.nasa.gov/dsn/config.xml");
 const QUrl DSNL::UrlData("http://eyes.nasa.gov/dsn/data/dsn.xml");
 
@@ -50,9 +52,27 @@ void DSNL::init()
     config->update();
     data->update();
 }
+void DSNL::initp()
+{
+    QTextStream out(stdout);
+
+    config->update();
+    config->print(out);
+
+    data->update();
+    data->print(out);
+}
 void DSNL::update()
 {
     data->update();
+}
+void DSNL::updatep()
+{
+    QTextStream out(stdout);
+
+    data->update();
+
+    data->print(out);
 }
 void DSNL::close()
 {

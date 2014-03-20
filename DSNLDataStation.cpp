@@ -43,10 +43,8 @@ void DSNLDataStation::print(QTextStream& out){
     QList<DSNLDataStationDish*>::iterator it = dishes.begin();
     QList<DSNLDataStationDish*>::iterator end = dishes.end();
     while (it != end){
-        DSNLDataStationDish* dish = *it;
+        DSNLDataStationDish* dish = *it++;
 
         dish->print(out);
-
-        it++;
     }
 }

@@ -51,13 +51,13 @@ DSNLDataStationDish::~DSNLDataStationDish()
 }
 void DSNLDataStationDish::print(QTextStream& out){
 
-    out << "dish " << system << ", az " << azimuth << ", el " << elevation << endl;
+    out << "\tdish " << system << ", az " << azimuth << ", el " << elevation << endl;
     {
         QList<DSNLDataStationSignal*>::iterator it = signal.begin();
         QList<DSNLDataStationSignal*>::iterator end = signal.end();
 
         while (it != end){
-            DSNLDataStationSignal* sig = *it;
+            DSNLDataStationSignal* sig = *it++;
 
             sig->print(out);
         }
@@ -67,7 +67,7 @@ void DSNLDataStationDish::print(QTextStream& out){
         QList<DSNLDataStationTarget*>::iterator end = target.end();
 
         while (it != end){
-            DSNLDataStationTarget* tgt = *it;
+            DSNLDataStationTarget* tgt = *it++;
 
             tgt->print(out);
         }

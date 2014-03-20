@@ -43,10 +43,10 @@ int main(int argc, char** argv){
 
     Main main(argc,argv);
 
-    main.dsnl->init();
+    main.dsnl->initp();
 
     QTimer *timer = new QTimer();
-    QObject::connect(timer,SIGNAL(timeout()),main.dsnl,SLOT(update()));
+    QObject::connect(timer,SIGNAL(timeout()),main.dsnl,SLOT(updatep()));
     timer->setInterval(3000);
     timer->start();
 
