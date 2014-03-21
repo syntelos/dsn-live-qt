@@ -33,6 +33,8 @@ void DSNLXml::close(){
 }
 void DSNLXml::update(){
 
+    prepare();
+
     if (httpc->isOpen()){
 
         qDebug() << "DSNLXml::update <continue>";

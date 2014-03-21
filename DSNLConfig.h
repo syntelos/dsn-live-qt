@@ -49,5 +49,8 @@ class DSNLConfig : public DSNLXml {
 
     virtual void read();
 
+ protected:
+    virtual void prepare();
+
 };
 #endif

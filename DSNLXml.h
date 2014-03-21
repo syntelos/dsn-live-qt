@@ -59,5 +59,8 @@ class DSNLXml : public QObject {
  signals:
     void completed();
     void failed();
+
+ protected:
+    virtual void prepare() = 0;
 };
 #endif

@@ -16,6 +16,7 @@
  * program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <QDebug>
+#include <cmath>
 
 #include "DSNLData.h"
 #include "DSNLDataStationDish.h"
@@ -29,6 +30,20 @@ DSNLData::DSNLData(HTTPStreamClient* nam, const QUrl& src, QObject* p)
 DSNLData::~DSNLData()
 {
     clear();
+}
+void DSNLData::prepare(){
+    QString path = src.path();
+    path += "?r=";
+	
+    qint64 r_value = std::floor( QDateTime::currentMSecsSinceEpoch() / 5000);
+    {
+        QString r_format;
+        r_format = QString("%1").arg(r_value);
+        path += r_format;
+    }
+    QVariant qv(path);
+
+    q.path.swap(qv);
 }
 void DSNLData::clear(){
     QList<DSNLDataStation*>::iterator it = stations.begin();

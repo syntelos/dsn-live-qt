@@ -30,6 +30,8 @@ DSNLConfig::~DSNLConfig()
 {
     clear();
 }
+void DSNLConfig::prepare(){
+}
 void DSNLConfig::clear(){
     {
         QMap<QString,DSNLConfigSite*>::iterator it = sites.begin();
